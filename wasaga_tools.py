@@ -17,15 +17,11 @@ import os
 # %% [markdown]
 
 
-
-
-
 # %%
 
 def run_wasaga(my_params):
     # ## Import
 
-    
     mytop =np.loadtxt('_imports/top')
     mybot = np.loadtxt('_imports/bot')
     myibound = np.loadtxt('_imports/ibound')
@@ -33,7 +29,6 @@ def run_wasaga(my_params):
     myicbund = np.loadtxt('_imports/icbund')
 
     mybot.min() -mytop.max()
-
 
     Lx = 150
     Lz = 10
@@ -44,16 +39,6 @@ def run_wasaga(my_params):
     delc = 1.0
     delv = mytop[:,0] - mybot[:,0]
  
-    # ## Import
-
-    
-    # mytop =np.loadtxt('_imports/top')
-    # mybot = np.loadtxt('_imports/bot')
-    # myibound = np.loadtxt('_imports/ibound')
-    # mystrt = np.loadtxt('_imports/strt')
-    # myicbund = np.loadtxt('_imports/icbund')
-
-
 
     # ## Workspace
 

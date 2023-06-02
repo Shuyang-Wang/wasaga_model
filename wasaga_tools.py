@@ -52,15 +52,11 @@ def run_wasaga(my_params):
     temp_dir = mkdtemp(prefix='_T{}_{}_'.format(myt,name))
     workspace = temp_dir
     os.makedirs(Path(workspace) / '_output')
-
     swt = flopy.seawat.Seawat(name, exe_name="swtv4", model_ws=workspace)
-
-    print(workspace)
 
     
    ##
 
-    
     import os
     import platform
     import subprocess
@@ -75,12 +71,8 @@ def run_wasaga(my_params):
 
     open_file(workspace)
 
-    
-    
-
 
     
-
     # %%
     def create_time_table():
         time_table = pd.DataFrame()
@@ -102,10 +94,7 @@ def run_wasaga(my_params):
             time_table.loc[key,'ssm'] = value[0][3]
         return time_table
 
-    # %%
 
-
-    # %% [markdown]
     # ## DIS
 
     # %%
@@ -118,7 +107,6 @@ def run_wasaga(my_params):
     nstp = np.repeat(1,nper)
     steady = np.append(np.array([True]),np.repeat(False,nper-1))
 
-    # %%
 
 
     # %%
@@ -138,30 +126,16 @@ def run_wasaga(my_params):
         steady = steady
     )
 
-    # %% [markdown]
-    # ## BAS
 
-    # %%
     bas = flopy.modflow.ModflowBas(swt, myibound.reshape([74,1,110]), mystrt.reshape([74,1,110]))
 
-    # %% [markdown]
-    # ## LPF
 
-    # %%
-    # The Layer-Property Flow package is used to specify properties controlling flow between cells.
     lpf = flopy.modflow.ModflowLpf(swt, hk=my_params['hk'], vka=my_params['vk'],
                                 ss= my_params['ss'],sy=my_params['sy'],
                                 ipakcb=ipakcb,laytyp=1)
 
- 
-    # ## PCG
-    # PCG - Preconditioned Conjugate-Gradient Package
     pcg = flopy.modflow.ModflowPcg(swt, hclose=1e-4)
 
-
-
-
-    # ## OC
 
 
     stress_period_data = {}
@@ -184,10 +158,8 @@ def run_wasaga(my_params):
 
     # ## Well
 
-
     wel_data = my_params['wel_data']
     wel = flopy.modflow.ModflowWel(swt, stress_period_data=wel_data, ipakcb=ipakcb)
-
 
     # ModflowRch
 
@@ -217,7 +189,7 @@ def run_wasaga(my_params):
         nprobs=10,
         nprmas=10,
         dt0=my_params['dt0'],  # The user-specified initial transport step size
-        ttsmult=1.02,
+        ttsmult=1.1,
         mxstrn = 50000,
         icbund = myicbund.reshape([74,1,110])
     )
@@ -461,9 +433,7 @@ if (__name__ == '__main__'):
 
     # dt0
     my_params['dt0'] = 0.1
-    ################################################################
-    
-
+    ##########################################
 
 
 

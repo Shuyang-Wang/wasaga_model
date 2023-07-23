@@ -1,0 +1,11 @@
+                                  MODFLOW-2005     
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                            VERSION 1.12.00 2/3/2017
+
+ LIST FILE: square_grid_model.list
+                         UNIT    2
+
+ OPENING square_grid_model.dis
+ FILE TYPE:DIS   UNIT   11   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+  BAS PACKAGE FILE HAS NOT BEEN OPENED.

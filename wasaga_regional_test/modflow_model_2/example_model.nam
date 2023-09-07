@@ -5,5 +5,6 @@ BAS6              13  example_model.bas
 LPF               15  example_model.lpf
 PCG               27  example_model.pcg
 OC                14  example_model.oc
+WEL               20  example_model.wel
 DATA(BINARY)      53  example_model.cbc REPLACE
 DATA(BINARY)      51  example_model.hds REPLACE

@@ -16,7 +16,6 @@ import subprocess
 import os
 # %% [markdown]
 
-
 # %%
 
 def run_wasaga(my_params):

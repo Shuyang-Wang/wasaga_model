@@ -19,3 +19,9 @@ period 4 step 1
 period 5 step 1 
   save head
 
+period 6 step 1 
+  save head
+
+period 7 step 1 
+  save head
+

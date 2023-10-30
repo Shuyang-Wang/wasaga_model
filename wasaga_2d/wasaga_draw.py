@@ -220,7 +220,6 @@ def plot_distance_mass(workspace,name,model):
     plt.savefig(Path(workspace) /'_output/SRP_mass.png')
     plt.close()
 
-
     
 
 # %%------------------------------

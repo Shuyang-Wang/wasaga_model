@@ -48,6 +48,7 @@ def run_wasaga(my_params):
 
     myt = datetime.now().strftime('%m%d%H%M%S')
     name = 'wasaga'
+    #name =my_params['name']
     temp_dir = mkdtemp(prefix='_T{}_{}_'.format(myt,name))
     workspace = temp_dir
     os.makedirs(Path(workspace) / '_output')

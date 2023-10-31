@@ -199,7 +199,7 @@ def plot_distance_mass(workspace,name,model):
         concentration = ucnobj.get_data(totim=times[per])
         concentration[concentration==1e30]=0
 
-        distances = [50,60,70,80,90]
+        distances = [50,55,60,65,70,75,80,85,90]
         vsums = []
         for dis in distances:
             col = delr.cumsum().tolist().index(dis)
@@ -210,8 +210,12 @@ def plot_distance_mass(workspace,name,model):
         plt.plot(np.array(distances)-30,vsums,marker='o',alpha=0.8,label='{} days'.format(times[per]))
     plt.ylabel('SRP Mass')
     plt.xlabel('Distance from Septic Bed (m)')
-    plt.ylim(0,15000)
+    plt.ylim(0)
     plt.xlim(0)
+
+
+    hk = model.lpf.hk.array.flatten()[0]
+    plt.title('hk:{}'.format(hk))
 
     plt.legend()
     plt.gcf().set_size_inches(4,3)
@@ -250,6 +254,7 @@ def plot_distance_conc(workspace,name,model):
     plt.xlabel('Distance to Tile (m)')
     plt.ylim(0)
     plt.xlim(0)
+
     plt.legend()
 
     plt.gcf().set_size_inches(4,3)

@@ -218,6 +218,7 @@ def plot_distance_mass(workspace,name,model):
     plt.title('hk:{}'.format(hk))
 
     plt.legend()
+    plt.ylim(0,15000)
     plt.gcf().set_size_inches(4,3)
     plt.tight_layout()
 

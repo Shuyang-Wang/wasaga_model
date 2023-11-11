@@ -199,7 +199,13 @@ def plot_distance_mass(workspace,name,model):
         concentration = ucnobj.get_data(totim=times[per])
         concentration[concentration==1e30]=0
 
-        distances = [50,55,60,65,70,75,80,85,90]
+        distances = [45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120]
+        distances = np.arange(30,140,5)
+        find_closest_value = lambda target_value: min(delr.cumsum(), key=lambda x: abs(target_value- x))
+        distances  = np.unique([find_closest_value(n) for n in distances])
+
+        #distances = [40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135]
+        #distances = np.arange(40,140,5)
         vsums = []
         for dis in distances:
             col = delr.cumsum().tolist().index(dis)
@@ -212,13 +218,16 @@ def plot_distance_mass(workspace,name,model):
     plt.xlabel('Distance from Septic Bed (m)')
     plt.ylim(0)
     plt.xlim(0)
+    plt.axvline(x=20,c='k',linestyle='--')
+    plt.axvline(x=40,c='k',linestyle='--')
+    plt.axvline(x=60,c='k',linestyle='--')
 
 
-    hk = model.lpf.hk.array.flatten()[0]
-    plt.title('hk:{}'.format(hk))
+    k = model.my_params['sp1']
+    plt.title('k:{:.2g}'.format(k))
 
     plt.legend()
-    plt.ylim(0,15000)
+    plt.ylim(0,25000)
     plt.gcf().set_size_inches(4,3)
     plt.tight_layout()
 

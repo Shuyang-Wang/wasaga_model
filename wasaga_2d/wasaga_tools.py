@@ -194,7 +194,7 @@ def run_wasaga(my_params):
         icbund = myicbund.reshape([74,1,110])
     )
     adv = flopy.mt3d.Mt3dAdv(swt, mixelm=my_params['mixelm'],percel=0.4,mxpart=200000,nadvfd=0)
-    dsp = flopy.mt3d.Mt3dDsp(swt, al=0.2, trpt=my_params['trpt'], 
+    dsp = flopy.mt3d.Mt3dDsp(swt, al=my_params['la'], trpt=my_params['trpt'], 
                             trpv=my_params['trpv'], 
                             dmcoef=my_params['dmcoef'])
     gcg = flopy.mt3d.Mt3dGcg(swt, iter1=50, mxiter=1, isolve=2, cclose=my_params['cclose'])

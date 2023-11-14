@@ -209,7 +209,7 @@ def plot_distance_mass(workspace,name,model):
         vsums = []
         for dis in distances:
             col = delr.cumsum().tolist().index(dis)
-            vsum = (concentration[:,0,col]*delv).sum()*60
+            vsum = (concentration[:,0,col]*delv).sum()*60/delr[col]
             vsums.append(vsum)
 
 
@@ -224,7 +224,8 @@ def plot_distance_mass(workspace,name,model):
 
 
     k = model.my_params['sp1']
-    plt.title('k:{:.2g}'.format(k))
+    la = model.my_params['la']
+    plt.title('la:{:.2g}'.format(la))
 
     plt.legend()
     plt.ylim(0,25000)

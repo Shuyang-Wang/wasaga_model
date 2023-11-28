@@ -223,9 +223,9 @@ def plot_distance_mass(workspace,name,model):
     plt.axvline(x=60,c='k',linestyle='--')
 
     sp2 = model.my_params['sp2']
-    k = model.my_params['sp1']
+    k = model.my_params['hk']
     la = model.my_params['la']
-    plt.title('sp2:{:.2g}'.format(sp2))
+    plt.title('hk:{:.2g}'.format(k))
 
     plt.legend()
     plt.ylim(0,25000)

@@ -208,7 +208,6 @@ def plot_distance_mass(workspace,name,model):
         #distances = np.arange(40,140,5)
         vsums = []
         for dis in distances:
-            
             col = delr.cumsum().tolist().index(dis)
             vsum = (concentration[:,0,col]*delv).sum()*60
             vsums.append(vsum)

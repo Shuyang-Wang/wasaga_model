@@ -27,6 +27,34 @@ delv = np.array([0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1 , 0.1
 
 delr = np.concatenate([np.repeat(2,25),np.repeat(1,70),np.repeat(2,15)])
 
+
+##---
+
+def wt_layers():
+    headobj = bf.HeadFile(Path(workspace) / f"{name}.hds")
+    times = headobj.get_times()
+
+    heads = headobj.get_data(totim=headobj.get_times()[-1])
+
+    nlay, _, ncol = heads.shape
+
+    # Initialize an array to store the water table layer for each column in the first row
+    water_table_layers = np.full(ncol, -1)  # Use -1 to indicate no saturated cell found
+
+    # Iterate over each column in the first row to find the water table layer
+    first_row = 0  # Index for the first row
+    for col in range(ncol):
+        for lay in range(nlay):
+            if heads[lay, first_row, col] > 0:  # Assuming 0 is the threshold for saturation
+                water_table_layers[col] = lay
+                break  # Stop after finding the first saturated cell from the top
+
+    return water_table_layers
+
+def find_nearest_index(array, value):
+    idx = (np.abs(array - value)).argmin()
+    return idx
+
 #--------------------
 
 def draw_all_hds(workspace,name,model):
@@ -194,6 +222,7 @@ def plot_distance_mass(workspace,name,model):
 
     ucnobj = bf.UcnFile(Path(workspace) / "MT3D001.UCN", model=model)
     times = ucnobj.get_times()
+    wt = wt_layers()
 
     for per in [-1,-2,-3]:
         concentration = ucnobj.get_data(totim=times[per])
@@ -209,7 +238,12 @@ def plot_distance_mass(workspace,name,model):
         vsums = []
         for dis in distances:
             col = delr.cumsum().tolist().index(dis)
-            vsum = (concentration[:,0,col]*delv).sum()*60
+            wt_index = wt[col]
+            
+            v1 = wt_index
+            v2 = find_nearest_index(delv[wt_index:].cumsum(), 3) +v1
+            print(dis, v1,v2)
+            vsum = (concentration[v1:v2,0,col]*delv[v1:v2]).sum()*60
             vsums.append(vsum)
 
 
@@ -225,7 +259,7 @@ def plot_distance_mass(workspace,name,model):
     sp1 = model.my_params['sp1']
     k = model.my_params['hk']
     la = model.my_params['la']
-    plt.title('hk:{:.2g}'.format(k))
+    plt.title('la:{:.2g}'.format(la))
 
     plt.legend()
     plt.ylim(0,25000)

@@ -243,8 +243,8 @@ def plot_distance_mass(workspace,name,model):
             v1 = wt_index
             v2 = find_nearest_index(delv[wt_index:].cumsum(), 3) +v1
             print(dis, v1,v2)
-            vsum = (concentration[v1:v2,0,col]*delv[v1:v2]).sum()*60
-            vsum = (concentration[:,0,col]*delv[:]).sum()*60
+            vsum = (concentration[v1:v2,0,col]*delv[v1:v2]).sum()*30
+            vsum = (concentration[:,0,col]*delv[:]).sum()*30
             vsums.append(vsum)
 
 

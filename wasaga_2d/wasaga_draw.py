@@ -327,9 +327,9 @@ if (__name__ == '__main__'):
     
     plot_distance_mass(workspace,name,model)
     plot_distance_conc(workspace,name,model)
-    draw_all_sp1b(workspace,name,model)
-    draw_all_sp1c(workspace,name,model)
-    #draw_all_hds(workspace,name,model)
+    #draw_all_sp1b(workspace,name,model)
+    #draw_all_sp1c(workspace,name,model)
+    draw_all_hds(workspace,name,model)
 # %%------------------------------
 
 

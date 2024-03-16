@@ -560,8 +560,7 @@ for index, row in df.iterrows():
     # Calculate the range of years for each septic source
     start_key = start_year - model_begin_year + 1
     end_key = end_year - model_begin_year  + 1
-
-   
+    end_key = nper - 1
 
     # Loop through each year for the septic source
     for year_key in range(start_key, end_key + 1):
@@ -579,6 +578,11 @@ for index, row in df.iterrows():
 
     # Set the recharge rate back to the background rate after the septic system's active period
     rch_dict[end_key + 1][row_index, col_index] = 0.00013
+
+
+filtered_dict = {key: rch_dict[key] for key in rch_dict if 0 <= key <= 100}
+print(filtered_dict)
+rch_dict = filtered_dict
 
 # Create the ModflowRch object
 rch = flopy.modflow.ModflowRch(model=mf, rech=rch_dict)

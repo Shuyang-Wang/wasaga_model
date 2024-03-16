@@ -98,7 +98,7 @@ adj_non = '_' + generate_random_name()
 if use_d_drive and platform.system() == 'Windows':  # Check if on Windows
     temp_dir = 'H:/mf/_T{}_{}'.format(myt, adj_non)  # Path for D drive
 elif use_d_drive and platform.system() == 'Darwin':  # Check if on macOS
-    temp_dir = '/Volumes/Public/mf/_T{}_{}'.format(myt, adj_non)
+    temp_dir = '/Volumes/Expansion/mf/_T{}_{}'.format(myt, adj_non)
 else:
     temp_dir = mkdtemp(prefix='_T{}_'.format(myt), suffix=adj_non)
 
@@ -560,6 +560,8 @@ for index, row in df.iterrows():
     # Calculate the range of years for each septic source
     start_key = start_year - model_begin_year + 1
     end_key = end_year - model_begin_year  + 1
+
+    end_key = nper-1
 
     # Loop through each year for the septic source
     for year_key in range(start_key, end_key + 1):

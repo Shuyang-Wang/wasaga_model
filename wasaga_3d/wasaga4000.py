@@ -724,9 +724,7 @@ if period in rch_dict:
     plt.xlabel('Column Index'); plt.ylabel('Row Index'); plt.title(f'RCH Array Visualization at Period {period}');plt.show()
 else: print(f"No data available for period {period}")
 
-
 # %%
-
 
 # %% [markdown]
 # # OC

@@ -916,6 +916,7 @@ background_recharge = 0.00013
 septic_recharge = 0.51 / delr / delc
 background_concentration = 0.01
 septic_concentration = 5000
+septic_concentration = 3000
 
 # Loop through each stress period in rch_dict
 for stress_period, rch_array in rch_dict.items():
@@ -941,6 +942,7 @@ import numpy as np
 
 # Constants for recharge and concentration
 septic_concentration = 5000
+septic_concentration = 3000
 
 # Calculate and plot in a compact form
 kpers, active_septics = zip(*sorted((year_key, np.sum(crch == septic_concentration)) for year_key, crch in crch_dict.items()))

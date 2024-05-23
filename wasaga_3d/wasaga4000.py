@@ -936,6 +936,7 @@ import numpy as np
 
 # Constants for recharge and concentration
 septic_concentration = 5000
+septic_concentration = 3000
 
 # Calculate and plot in a compact form
 kpers, active_septics = zip(*sorted((year_key, np.sum(crch == septic_concentration)) for year_key, crch in crch_dict.items()))

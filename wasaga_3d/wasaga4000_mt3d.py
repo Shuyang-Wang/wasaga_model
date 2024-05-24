@@ -96,13 +96,16 @@ name = 'wasaga'
 adj_non = '_' + generate_random_name()
 
 if use_d_drive and platform.system() == 'Windows':  # Check if on Windows
-    temp_dir = 'F:/mf/_T{}_{}'.format(myt, adj_non)  # Path for D drive
+    #temp_dir = 'F:/mf/_T{}_{}'.format(myt, adj_non)  # Path for D drive
+    temp_dir = "Z:\_T0317031619__Wide_Clock"
 elif use_d_drive and platform.system() == 'Darwin':  # Check if on macOS
-    temp_dir = '/Volumes/Expansion/mf/_T{}_{}'.format(myt, adj_non)
+    #temp_dir = '/Volumes/Expansion/mf/_T{}_{}'.format(myt, adj_non)
+    temp_dir = "Z:\_T0317031619__Wide_Clock"
 else:
-    temp_dir = mkdtemp(prefix='_T{}_'.format(myt), suffix=adj_non)
+    #temp_dir = mkdtemp(prefix='_T{}_'.format(myt), suffix=adj_non)
+    temp_dir = "Z:\_T0317031619__Wide_Clock"
 
-os.makedirs(Path(temp_dir) / '_output', exist_ok=True)
+#os.makedirs(Path(temp_dir) / '_output', exist_ok=True)
 model_ws = temp_dir
 
 
@@ -136,9 +139,11 @@ base_parms = parms
 
 # %%
 # Create a MODFLOW model instance
-mf = flopy.modflow.Modflow(modelname="example_model",version='mf2005',
-                              exe_name='mf2005', 
-                              model_ws=model_ws)
+# mf = flopy.modflow.Modflow(modelname="example_model",version='mf2005',
+#                               exe_name='mf2005', 
+#                               model_ws=model_ws)
+
+mf = flopy.modflow.Modflow.load('example_model.nam', model_ws=model_ws)
 
 # %%
 # # Create a MODFLOW model instance
@@ -181,11 +186,7 @@ steady = np.append(np.array([True]),np.repeat(False,nper-1))
 # Create DIS package
 
 # %%
-dis = flopy.modflow.ModflowDis(mf, nlay=nlay, nrow=nrow, ncol=ncol, 
-                               delr=delr, delc=delc,top=top_elev, 
-                               botm=botm_elev,
-                               nper = nper, perlen = perlen,
-                               nstp = 1, steady = steady)
+dis = mf.dis
 
 
 # %%
@@ -345,7 +346,8 @@ plt.show()
 # %%
 
 # Create BAS package
-bas = flopy.modflow.ModflowBas(mf, ibound=ibound, strt=initial_head)
+#bas = flopy.modflow.ModflowBas(mf, ibound=ibound, strt=initial_head)
+bas = mf.bas
 
 # Define hydraulic properties
 horizontal_k = parms['hk'] # Horizontal hydraulic conductivity (m/day)
@@ -353,10 +355,7 @@ vertical_ka = 0.1   # Vertical hydraulic conductivity (m/day)
 porosity = 0.25     # Porosity
 
 # Create LPF package (Layer Property Flow package)
-lpf = flopy.modflow.ModflowLpf(mf, hk=horizontal_k, 
-                               vka=vertical_ka, laytyp=1, 
-                               ipakcb=None,ss=0.0002,sy=0.33,
-                               laywet=1,iwetit=5,wetfct=0.1,ihdwet=0,iwdflg=1,wetdry=-0.25)
+lpf = mf.lpf
 
 # #ss=0.0002,sy=0.33
 # upw = flopy.modflow.ModflowUpw(model, laytyp=1, hk=horizontal_k)
@@ -366,9 +365,7 @@ lpf = flopy.modflow.ModflowLpf(mf, hk=horizontal_k,
 #                                mxiter=100,iter1=60)
 
 
-pcg = flopy.modflow.ModflowPcg(mf, hclose=1e-3,npcond=1,
-                               relax=0.98,rclose=1e-4,mutpcg=0,nbpol=0,iprpcg=0,
-                               mxiter=200,iter1=120, damp=0.95)
+pcg = mf.pcg
 
 #
 
@@ -581,11 +578,11 @@ for index, row in df.iterrows():
     rch_dict[end_key + 1][row_index, col_index] = 0.00013
 
 # Create the ModflowRch object
-rch = flopy.modflow.ModflowRch(model=mf, rech=rch_dict)
+rch = mf.rch
 
 
 # %%
-rch_dict
+
 
 # %%
 # # Assuming 'mf' is your MODFLOW model and 'rch_dict' is a dictionary with stress period numbers as keys and recharge arrays as values
@@ -742,18 +739,13 @@ for kper in range(nper):
             "print budget",
         ]
 
-oc = flopy.modflow.ModflowOc(
-    mf,
-    stress_period_data= spd,
-    compact=True
-    ,extension=['oc', 'hds', 'ddn', 'cbc', 'ibo']
-)
+oc = mf.oc
 
 #oc.reset_budgetunit(budgetunit=1053, fname='test.cbc')
-oc.reset_budgetunit(budgetunit=53, fname='example_model.cbc')
+#oc.reset_budgetunit(budgetunit=53, fname='example_model.cbc')
 
 # %%
-lmt = flopy.modflow.ModflowLmt(mf, output_file_name='mt3d_link.ftl')
+#lmt = flopy.modflow.ModflowLmt(mf, output_file_name='mt3d_link.ftl')
 
 # %%
 open_file(model_ws)

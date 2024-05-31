@@ -366,9 +366,9 @@ lpf = flopy.modflow.ModflowLpf(mf, hk=horizontal_k,
 #                                mxiter=100,iter1=60)
 
 
-pcg = flopy.modflow.ModflowPcg(mf, hclose=1e-3,npcond=1,
-                               relax=0.98,rclose=1e-4,mutpcg=0,nbpol=0,iprpcg=0,
-                               mxiter=200,iter1=120, damp=0.95)
+pcg = flopy.modflow.ModflowPcg(mf, hclose=1e-2,npcond=1,
+                               relax=0.95,rclose=1e-3,mutpcg=0,nbpol=0,iprpcg=0,
+                               mxiter=100,iter1=50, damp=0.8)
 
 #
 
@@ -909,7 +909,7 @@ crch_dict = {}
 background_recharge = 0.00013
 septic_recharge = 0.51 / delr / delc
 background_concentration = 0.01
-septic_concentration = 5000
+septic_concentration = 3000
 
 # Loop through each stress period in rch_dict
 for stress_period, rch_array in rch_dict.items():
@@ -934,7 +934,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Constants for recharge and concentration
-septic_concentration = 5000
+septic_concentration = 3000
 
 # Calculate and plot in a compact form
 kpers, active_septics = zip(*sorted((year_key, np.sum(crch == septic_concentration)) for year_key, crch in crch_dict.items()))

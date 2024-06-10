@@ -347,7 +347,7 @@ plt.show()
 
 # Create BAS package
 #bas = flopy.modflow.ModflowBas(mf, ibound=ibound, strt=initial_head)
-bas = mf.bas
+bas = mf.bas6
 
 # Define hydraulic properties
 horizontal_k = parms['hk'] # Horizontal hydraulic conductivity (m/day)

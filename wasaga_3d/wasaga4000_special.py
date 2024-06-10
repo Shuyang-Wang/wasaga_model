@@ -98,7 +98,7 @@ adj_non = '_' + generate_random_name()
 if use_d_drive and platform.system() == 'Windows':  # Check if on Windows
     temp_dir = 'Z:/Shuyang/mf/_T{}_{}'.format(myt, adj_non)  # Path for D drive
 elif use_d_drive and platform.system() == 'Darwin':  # Check if on macOS
-    temp_dir = '/Volumes/Expansion/mf/_T{}_{}'.format(myt, adj_non)
+    temp_dir = '/Volumes/Public/mf/_T{}_{}'.format(myt, adj_non)
 else:
     temp_dir = mkdtemp(prefix='_T{}_'.format(myt), suffix=adj_non)
 
@@ -369,6 +369,7 @@ lpf = flopy.modflow.ModflowLpf(mf, hk=horizontal_k,
 pcg = flopy.modflow.ModflowPcg(mf, hclose=1e-3,npcond=1,
                                relax=0.98,rclose=1e-4,mutpcg=0,nbpol=0,iprpcg=0,
                                mxiter=200,iter1=120, damp=0.95)
+
 
 #
 
